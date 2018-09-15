@@ -9,7 +9,7 @@ class CargoTrain < Train
       if carriage.instance_of?(CargoCarriage)
         super(carriage)
       else
-        puts "К грузовому поезду можно прицеплять только грузовые вагоны."
+        puts "У поезда и вагона разные типы."
       end
     end
 
