@@ -1,34 +1,34 @@
 class Train
   attr_accessor :speed, :number, :route, :station
-  attr_reader :type, :car_count
+  attr_reader :type, :carriage_count
 
-  def initialize(number, type, car_count)
+  def initialize(number, type, carriage_count)
     @number = number
     @type = type
-    @car_count = car_count
+    @carriage_count = carriage_count
     @speed = 0
-    puts "Создан поезд с номером #{number}. Тип: #{type}. Количество вагонов: #{car_count}."
+    puts "Создан поезд с номером #{number}. Тип: #{type}. Количество вагонов: #{carriage_count}."
   end
 
   def stop
     self.speed = 0
   end
 
-  def add_car
+  def add_carriage
     if speed.zero?
-      self.car_count += 1
-      puts "К поезду с номером #{number} прицепили вагон. Теперь их #{car_count}."
+      self.carriage_count += 1
+      puts "К поезду с номером #{number} прицепили вагон. Теперь их #{carriage_count}."
     else
       puts "Для прицепкт вагонов, поезд должен стоять."
     end
   end
 
-  def remove_car
-    if car_count.zero?
+  def remove_carriage
+    if carriage_count.zero?
       puts "Вагонов уже не осталось."
     elsif speed.zero?
-      self.car_count -= 1
-      puts "От поезда с номером #{number} отцепили вагон. Теперь их #{car_count}."
+      self.carriage_count -= 1
+      puts "От поезда с номером #{number} отцепили вагон. Теперь их #{carriage_count}."
     else
       puts "На ходу нельзя отцеплять вагоны!"
     end
