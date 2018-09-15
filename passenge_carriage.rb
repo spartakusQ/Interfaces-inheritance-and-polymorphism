@@ -1,4 +1,6 @@
 #класс пассажирского вагона, родительским является вагон
 class PassengerCarriage < Carriage
-  #code
+  def initialize(number)
+    super(number)
+  end
 end
