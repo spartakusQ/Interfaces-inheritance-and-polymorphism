@@ -1,6 +1,6 @@
 #класс пассажирского вагона, родительским является вагон
 class PassengerCarriage < Carriage
-  def initialize(number)
-    super(number)
+  def initialize
+    super(:passenger)
   end
 end

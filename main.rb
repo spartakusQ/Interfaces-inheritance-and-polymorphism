@@ -6,7 +6,134 @@ require_relative 'cargo_train'
 require_relative 'cargo_carriage'
 require_relative 'passenger_train'
 require_relative 'passenger_carriage'
-require_relative 'menu'
 
-main_menu = MainMenu.new
-main_menu.start
+stations = []
+trains = []
+CARRIAGE_TYPES = {'cargo' => CargoCarriage, 'passenger' => PassengerCarriage}
+
+puts %Q(
+  Выберети нужное вам меню:
+  1.Создание станции. rdy
+  2.Создание поезда. rdy
+  3.Создание маршрута и управление станциями.
+  4.Назначение маршрута поезду.
+  5.Добавление выгоны к поезду.
+  6.Отцепить вагоны от поезда.
+  7.Перемещать поезд по маршруту вперёд и назад.
+  8.Просматривать список станций и список поездов на станции.
+  0.Выход из меню.
+  )
+loop do
+  puts 'Введите номер команды: '
+  input = gets.to_i
+
+case input
+  when 1  #1.Создание станции.
+      puts 'C каким названием?'
+      name = gets.chomp
+      stations << TrainStation.new(name)
+      puts "Построена станция #{name}"
+  when 2#  2.Создание поезда.
+    puts 'Поезд с каким номером хотите создать?'
+    number = gets.chomp
+    puts '1 - пассажирский; 2 - грузовой'
+    choice = gets.chomp.to_i
+      case choice
+        when 1
+          trains << PassengerTrain.new(number)
+          puts "Создан пассажирский поезд №#{number}"
+        when 2
+          trains << CargoTrain.new(number)
+          puts "Создан грузовой поезд №#{number}"
+        else
+          puts "Поезд не создан. Надо было ввести 1 или 2"
+      end
+  when 3#  3.Создание маршрута и управление станциями.
+    stations.each { |station| puts station.name } || "Станций пока не существует"
+    if stations.empty?
+      puts 'Сначала необходимо создать станцию'
+    elsif trains.empty?
+     puts 'Сначала необходимо создать поезд'
+    else
+      puts "Маршрутный лист содержит станции:#{stations}"
+      puts 'Введите начальную станцию:'
+      start_station = gets.chomp
+      if start_station == @station_name
+         puts 'Станция есть в списке.'
+      end
+      #перебор станций
+    end
+  when 4#  4.Назначение маршрут поезду.
+    if trains.empty?
+      puts 'Сначала необходимо создать поезд'
+    elsif stations.empty?
+      puts 'Сначала необходимо создать станцию'
+    else
+      puts 'Какой поезд? (введите номер)'
+      number = gets.chomp
+      train = trains.detect{|train| train.number == number}
+      if train.nil?
+        puts 'Поезда с таким номером нет'
+      else
+        puts 'На какую станцию? (название)'
+        name = gets.chomp
+        station = stations.detect{|station| station.name == name}
+        if station.nil?
+          puts 'Такой станции нет'
+        else
+          station.get_train(train)
+        end
+      end
+    end
+  when 5#  5.Добавление выгоны к поезду.
+    ########################################проверить else условия
+    if trains.empty?
+      puts 'Сначала необходимо создать поезд'
+    else
+      puts 'К какому? (введите номер)'
+      number = gets.chomp
+      train = trains.detect{|train| train.number == number}
+      if train.nil?
+      puts 'Поезда с таким номером нет'
+      else
+      train.add_carriage(CARRIAGE_TYPES[train.type])
+      end
+    end
+    ########################################
+  when 6#  6.Отцепить вагоны от поезда.
+    if trains.empty?
+      puts 'Сначала необходимо создать поезд'
+    else
+      puts 'От какого? (введите номер)'
+      number = gets.chomp
+      train = trains.detect{|train| train.number == number}
+      if train.nil?
+        puts 'Поезда с таким номером нет'
+      elsif train.carriages.empty?
+        puts 'У этого поезда и так нет вагонов'
+      else
+        train.remove_carriage(train.carriages.last)
+      end
+    end
+  when 7#  7.Перемещать поезд по маршруту вперёд и назад.
+
+  when 8#  8.Просматривать список станций и список поездов на станции.
+    puts 'Список станций:'
+      stations.each{|station| puts station.name}
+    if stations.empty?
+      puts 'Сначала необходимо создать станцию'
+    else
+      puts 'На какой? (название)'
+      name = gets.chomp
+      station = stations.detect{|station| station.name == name}
+      if station.nil?
+        puts 'Такой станции нет'
+      else
+        station.show_trains
+      end
+    end
+  when 0#  0.Выход из меню.
+    puts 'Счастливого пути!'
+    exit
+  end
+end

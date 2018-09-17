@@ -1,12 +1,12 @@
 class Train
-  attr_accessor :speed, :number, :route, :station, :type  
+  attr_accessor :speed, :number, :route, :station, :type
 
   def initialize(number, type)
     @number = number
     @type = type
     @carriage = []
     @speed = 0
-    puts "Создан поезд с номером #{number}. Тип: #{type}. Количество вагонов: #{carriage}."
+    puts "Создан поезд с номером #{number}. Тип: #{type}. Количество вагонов: #{@carriage}."
   end
 
   def stop
