@@ -7,7 +7,7 @@ class TrainStation
     puts "Создана станция #{station_name}"
   end
 
-  def get_train(train)
+  def add_train(train)
     trains << train
     puts "На станцию #{station_name} прибыл поезд #{train.number}"
   end

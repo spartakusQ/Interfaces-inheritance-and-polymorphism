@@ -1,12 +1,11 @@
 class Train
-  attr_accessor :speed, :number, :route, :station, :type
+  attr_accessor :speed, :number, :route, :station
 
-  def initialize(number, type)
+  def initialize(number)
     @number = number
-    @type = type
     @carriage = []
     @speed = 0
-    puts "Создан поезд с номером #{number}. Тип: #{type}. Количество вагонов: #{@carriage}."
+    puts "Создан поезд с номером #{number}. Количество вагонов: #{@carriage}."
   end
 
   def stop
@@ -14,7 +13,7 @@ class Train
   end
 
   def up_speed(speed)
-    @speed += speed
+    @speed += 10
   end
 
   def current_speed
@@ -22,7 +21,7 @@ class Train
   end
 
   def down_speed(speed)
-    @speed -= speed
+    @speed -= 10
     @speed = 0 if @speed < 0
   end
 
@@ -31,7 +30,7 @@ class Train
       self.carriage += 1
       puts "К поезду с номером #{number} прицепили вагон. Теперь их #{carriage}."
     else
-      puts "Для прицепкт вагонов, поезд должен стоять."
+      puts "Для прицепки вагонов, поезд должен стоять."
     end
   end
 

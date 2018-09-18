@@ -12,7 +12,7 @@ trains = []
 CARRIAGE_TYPES = {'cargo' => CargoCarriage, 'passenger' => PassengerCarriage}
 
 puts %Q(
-  Выберети нужное вам меню:
+  Выберете нужное вам меню:
   1.Создание станции. rdy
   2.Создание поезда. rdy
   3.Создание маршрута и управление станциями.
@@ -33,12 +33,11 @@ case input
       name = gets.chomp
       stations << TrainStation.new(name)
       puts "Построена станция #{name}"
-  when 2#  2.Создание поезда.
+  when 2  #2.Создание поезда.
     puts 'Поезд с каким номером хотите создать?'
-    number = gets.chomp
     puts '1 - пассажирский; 2 - грузовой'
-    choice = gets.chomp.to_i
-      case choice
+    number = gets.chomp.to_i
+      case number
         when 1
           trains << PassengerTrain.new(number)
           puts "Создан пассажирский поезд №#{number}"
@@ -48,20 +47,19 @@ case input
         else
           puts "Поезд не создан. Надо было ввести 1 или 2"
       end
-  when 3#  3.Создание маршрута и управление станциями.
-    stations.each { |station| puts station.name } || "Станций пока не существует"
+  when 3  #3.Создание маршрута и управление станциями.
     if stations.empty?
       puts 'Сначала необходимо создать станцию'
     elsif trains.empty?
      puts 'Сначала необходимо создать поезд'
     else
+      stations.each { |station| puts stations.name }
       puts "Маршрутный лист содержит станции:#{stations}"
       puts 'Введите начальную станцию:'
       start_station = gets.chomp
-      if start_station == @station_name
+      if start_station == stations.include?
          puts 'Станция есть в списке.'
       end
-      #перебор станций
     end
   when 4#  4.Назначение маршрут поезду.
     if trains.empty?
@@ -94,9 +92,9 @@ case input
       number = gets.chomp
       train = trains.detect{|train| train.number == number}
       if train.nil?
-      puts 'Поезда с таким номером нет'
+        puts 'Поезда с таким номером нет'
       else
-      train.add_carriage(CARRIAGE_TYPES[train.type])
+        train.add_carriage(CARRIAGE_TYPES[train.type])
       end
     end
     ########################################
@@ -116,7 +114,19 @@ case input
       end
     end
   when 7#  7.Перемещать поезд по маршруту вперёд и назад.
-
+    puts 'Выберите в каком направлении хотите отправить поезд.'
+    puts '1 - вперёд; 2 - назад.'
+      trace = gets.chomp.to_i
+      case trace
+      when 1
+        puts "Введите номер поезда, который хотите отправить вперед"
+        selected_train.move_next
+        puts "Поезд #{train.number} прибыл на станцию #{@train.current_station.name}"
+      when 2
+        puts "Введите номер поезда, который хотите отправить вперед"
+        selected_train.move_next
+        puts "Поезд #{train.number} прибыл на станцию #{@train.current_station.name}"
+      end
   when 8#  8.Просматривать список станций и список поездов на станции.
     puts 'Список станций:'
       stations.each{|station| puts station.name}
