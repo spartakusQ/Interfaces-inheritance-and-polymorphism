@@ -70,7 +70,7 @@ case input
       puts 'Какой поезд? (введите номер)'
       number = gets.chomp
       train = trains.detect{|train| train.number == number}
-      if train.nil?
+      unless train
         puts 'Поезда с таким номером нет'
       else
         puts 'На какую станцию? (название)'
@@ -83,7 +83,7 @@ case input
         end
       end
     end
-  when 5#  5.Добавление выгоны к поезду.
+  when 5#  5.Добавление выгона к поезду.
     ########################################проверить else условия
     if trains.empty?
       puts 'Сначала необходимо создать поезд'
@@ -91,21 +91,21 @@ case input
       puts 'К какому? (введите номер)'
       number = gets.chomp
       train = trains.detect{|train| train.number == number}
-      if train.nil?
+      unless train
         puts 'Поезда с таким номером нет'
       else
         train.add_carriage(CARRIAGE_TYPES[train.type])
       end
     end
     ########################################
-  when 6#  6.Отцепить вагоны от поезда.
+  when 6#  6.Отцепить вагон от поезда.
     if trains.empty?
       puts 'Сначала необходимо создать поезд'
     else
       puts 'От какого? (введите номер)'
       number = gets.chomp
       train = trains.detect{|train| train.number == number}
-      if train.nil?
+      unless train
         puts 'Поезда с таким номером нет'
       elsif train.carriages.empty?
         puts 'У этого поезда и так нет вагонов'
